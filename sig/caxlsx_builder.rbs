@@ -1,0 +1,3 @@
+module CaxlsxBuilder
+  VERSION: String
+end
