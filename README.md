@@ -32,13 +32,30 @@ builder = CaxlsxBuilder::Builder.new({ 'Test' => [['a', 1.99, 'Yay!'], ['b', 2.0
   sheet.column('Interjections') { |item| item.last }
 end
 
+# Generate the AXLSX package
 package_axlsx = builder.call
+
+# Use Axlsx package's methods to store/write the file
+
+# Write on disk
 package_axlsx.serialize('test.xlsx')
+
+# Store with ActiveStorage (not a dependency of this gem): https://guides.rubyonrails.org/active_storage_overview.html
+class Export < ApplicationRecord
+  has_one_attached :file
+end
+
+file   = package_axlsx.to_stream.string
+export = Export.new
+export.file.attach(io:           StringIO.new(file), filename: 'test.xlsx',
+                   content_type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 ```
 
 Result:
 
 ![Excel export with 3 columns a header two rows and a footer](/test.xlsx.png)
+
+CaxlsxBuilder use the [Caxlsx](https://github.com/caxlsx/caxlsx) gem. The builder directly returns the Caxlsx package to let you do what you want with it.
 
 ## Development
 
