@@ -21,7 +21,7 @@ builder = CaxlsxBuilder::Builder.new({ 'Test' => [['a', 1.99, 'Yay!'], ['b', 2.0
   sheet.add_style(:white_on_brown, { bg_color: '936E00', fg_color: 'FFFFFF' })
 
   # Add a first column with a simple footer
-  sheet.column('Letters', footer: 'Somme letters') { |item| item.first }
+  sheet.column('Letters', footer: 'Some letters') { |item| item.first }
 
   # Add a second column with some dynamic style, a float type and a dynamic footer
   sheet.column('Numbers',

@@ -2,7 +2,7 @@ module CaxlsxBuilder
 
   class Sheet
 
-    attr_reader :headers, :cell_styles, :footers, :styles
+    attr_reader :name, :headers, :cell_styles, :footers, :styles
 
     def initialize(name)
       @name          = name

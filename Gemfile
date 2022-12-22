@@ -10,3 +10,5 @@ gem "rake", "~> 13.0"
 gem "rspec", "~> 3.12"
 
 gem "rubocop", "~> 1.41"
+
+gem 'rubyXL', '~> 3.4', '>= 3.4.25'

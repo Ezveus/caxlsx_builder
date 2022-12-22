@@ -3,6 +3,7 @@ module CaxlsxBuilder
     type cell_value = String? | Numeric?
     type footer_proc = ^(Array[cell_value]) -> cell_value
 
+    attr_reader name: String
     attr_reader headers: Array[String]
     attr_reader cell_styles: Array[Cell]
     attr_reader footers: Array[cell_value | footer_proc]

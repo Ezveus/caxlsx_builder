@@ -2,12 +2,17 @@ module CaxlsxBuilder
 
   class Builder
 
+    # rubocop:disable Naming/VariableNumber
+    # I can not change iso_8601 to iso8601 since it is the type expected by Caxlsx.
     CELL_TYPES = %i[date time float integer richtext string boolean iso_8601 text].freeze
+    # rubocop:enable Naming/VariableNumber
 
     def initialize(sheets, &builder)
       @sheets  = sheets
       @builder = builder
       @styles  = {}
+
+      # raise ArgumentError, "`sheets` must be a Hash[String, Array[untyped]]"
     end
 
     # @return [Axlsx::Package]
