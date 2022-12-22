@@ -51,7 +51,7 @@ module CaxlsxBuilder
     # @param name [String,Symbol] A name for the style
     # @param style [Integer] An Excel style identifier
     #   e.g. the result of `workbook.styles { |styles| styles.add_style() }`
-    # @return [Symbol] The given name as a Symbol
+    # @return [String, Symbol] The given name as a Symbol
     def define_style(name, style)
       name          = name.to_sym
       @styles[name] = style
@@ -102,7 +102,7 @@ module CaxlsxBuilder
         row = sheet.make_row(item)
 
         # Nil row or empty row means no row
-        compacted_row = row.compact
+        compacted_row = row&.compact
         next if compacted_row.nil? || compacted_row.empty?
 
         # Cells options returns an array which is logic: one option per sheet cell

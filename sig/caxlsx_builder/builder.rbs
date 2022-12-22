@@ -1,0 +1,45 @@
+module Axlsx
+  class Package
+  end
+
+  class Styles
+  end
+
+  class Workbook
+  end
+
+  class Worksheet
+  end
+end
+
+module CaxlsxBuilder
+  class Builder
+    CELL_TYPES: Array[Cell::type_value]
+
+    def initialize: (Hash[String, Array[untyped]] sheets) { (Sheet) -> void } -> void
+
+    def call: () -> Axlsx::Package
+
+    def define_default_styles: (Axlsx::Styles styles) -> void
+
+    def define_style: (String | Symbol name, Integer style) -> (String | Symbol)
+
+    def build_sheets: (Axlsx::Workbook workbook, Axlsx::Styles styles) -> void
+
+    def add_custom_styles: (Sheet sheet, Axlsx::Styles styles) -> void
+
+    def add_header_row: (Sheet sheet, Axlsx::Worksheet worksheet) -> void
+
+    def add_data_rows: (Array[untyped] collection, Sheet sheet, Axlsx::Worksheet worksheet) -> void
+
+    def add_footer_row: (Sheet sheet, Axlsx::Worksheet worksheet) -> void
+
+    def cell_options: (style: String? | Symbol?, type: Cell::type_value?) -> { style: Integer, type: Cell::type_value }
+
+    def cast_to_hash: (Array[{ style: Integer, type: Cell::type_value }] | { style: Array[Integer], types: Array[Cell::type_value] }) -> { style: Array[Integer], types: Array[Cell::type_value] }
+
+    def get_style: (String? | Symbol? style) -> Integer
+
+    def get_type: (Cell::type_value?) -> Cell::type_value
+  end
+end

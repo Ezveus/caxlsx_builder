@@ -1,0 +1,22 @@
+module CaxlsxBuilder
+  class Sheet
+    type cell_value = String? | Numeric?
+    type footer_proc = ^(Array[cell_value]) -> cell_value
+
+    attr_reader headers: Array[String]
+    attr_reader cell_styles: Array[Cell]
+    attr_reader footers: Array[cell_value | footer_proc]
+    attr_reader styles: Hash[String | Symbol, Hash[Symbol, untyped]]
+
+    def initialize: (String name) -> void
+
+    def column: (String header, style: Symbol | Cell::style_proc, type: Cell::type_value | Cell::type_proc,
+        footer: cell_value | footer_proc) { (untyped) -> cell_value } -> void
+
+    def add_style: (String | Symbol name, Hash[Symbol, untyped] style) -> void
+
+    def make_row: (untyped item) -> Array[cell_value]?
+
+    def cells: (Integer index) -> Array[cell_value]?
+  end
+end

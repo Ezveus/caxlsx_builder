@@ -1,0 +1,14 @@
+module CaxlsxBuilder
+  class Cell
+    type style_proc = ^(untyped) -> Symbol
+    type type_value = :date | :time | :float | :integer | :richtext | :string | :boolean | :iso_8601 | :text
+    type type_proc = ^(untyped) -> type_value
+
+    @style: Symbol | style_proc
+    @type: type_value | type_proc
+
+    def initialize: (?style: Symbol | style_proc, ?type: type_value | type_proc) -> void
+
+    def as_style: (untyped item) -> ({ style: Symbol, type: type_value })
+  end
+end
