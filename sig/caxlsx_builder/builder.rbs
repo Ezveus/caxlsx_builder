@@ -16,7 +16,7 @@ module CaxlsxBuilder
   class Builder
     CELL_TYPES: Array[Cell::type_value]
 
-    def initialize: (Hash[String, Array[untyped]] sheets) { (Sheet) -> void } -> void
+    def initialize: (Hash[String, Array[untyped]] sheets, options: { rescue_errors: bool }) { (Sheet) -> void } -> void
 
     def call: () -> Axlsx::Package
 

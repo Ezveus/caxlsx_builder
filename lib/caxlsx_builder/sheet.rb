@@ -25,12 +25,14 @@ module CaxlsxBuilder
       @styles[name] = style
     end
 
-    def make_row(item)
+    def make_row(item, rescue_errors: false)
       # Build the new row
       row = @cell_builders.map do |cell|
         cell.call(item)
-      rescue StandardError
-        nil
+      rescue StandardError => e
+        return nil if rescue_errors
+
+        raise e
       end
 
       # Add the new row to the cache then return it

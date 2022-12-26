@@ -7,12 +7,11 @@ module CaxlsxBuilder
     CELL_TYPES = %i[date time float integer richtext string boolean iso_8601 text].freeze
     # rubocop:enable Naming/VariableNumber
 
-    def initialize(sheets, &builder)
+    def initialize(sheets, options: { rescue_errors: false }, &builder)
       @sheets  = sheets
       @builder = builder
+      @options = options || { rescue_errors: false }
       @styles  = {}
-
-      # raise ArgumentError, "`sheets` must be a Hash[String, Array[untyped]]"
     end
 
     # @return [Axlsx::Package]
@@ -104,7 +103,7 @@ module CaxlsxBuilder
     # @param worksheet [Axlsx::Worksheet]
     def add_data_rows(collection, sheet, worksheet)
       collection.each do |item|
-        row = sheet.make_row(item)
+        row = sheet.make_row(item, rescue_errors: @options[:rescue_errors])
 
         # Nil row or empty row means no row
         compacted_row = row&.compact
@@ -113,7 +112,9 @@ module CaxlsxBuilder
         # Cells options returns an array which is logic: one option per sheet cell
         # But `sheet.add_row` does not handle arrays correctly, so I transform it to a valid
         # Hash using `cast_to_hash`.
-        cells   = sheet.cell_styles.map { |cell| cell_options(**cell.as_style(item)) }
+        cells   = sheet.cell_styles.map do |cell|
+          cell_options(**cell.as_style(item, rescue_errors: @options[:rescue_errors]))
+        end
         options = cast_to_hash(cells)
         worksheet.add_row(row, options)
       end
@@ -128,8 +129,10 @@ module CaxlsxBuilder
         else
           cell
         end
-      rescue StandardError
-        nil
+      rescue StandardError => e
+        return nil if @options[:rescue_errors]
+
+        raise e
       end
 
       # Last row is the footer with the footer style applied

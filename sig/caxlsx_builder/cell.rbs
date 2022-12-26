@@ -9,6 +9,11 @@ module CaxlsxBuilder
 
     def initialize: (?style: Symbol | style_proc, ?type: type_value | type_proc) -> void
 
-    def as_style: (untyped item) -> ({ style: Symbol, type: type_value })
+    def as_style: (untyped item, rescue_errors: bool) -> ({ style: Symbol, type: type_value })
+
+    private
+
+    def call_style_proc: (untyped item, rescue_errors: bool) -> Symbol
+    def call_type_proc: (untyped item, rescue_errors: bool) -> type_value
   end
 end

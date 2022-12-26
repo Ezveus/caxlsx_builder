@@ -16,7 +16,7 @@ module CaxlsxBuilder
 
     def add_style: (String | Symbol name, Hash[Symbol, untyped] style) -> void
 
-    def make_row: (untyped item) -> Array[cell_value]?
+    def make_row: (untyped item, rescue_errors: bool) -> Array[cell_value]?
 
     def cells: (Integer index) -> Array[cell_value]?
   end
