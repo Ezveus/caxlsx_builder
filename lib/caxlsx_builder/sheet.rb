@@ -28,11 +28,13 @@ module CaxlsxBuilder
     def make_row(item, rescue_errors: false)
       # Build the new row
       row = @cell_builders.map do |cell|
-        cell.call(item)
-      rescue StandardError => e
-        return nil if rescue_errors
+        begin
+          cell.call(item)
+        rescue StandardError => e
+          next nil if rescue_errors
 
-        raise e
+          raise e
+        end
       end
 
       # Add the new row to the cache then return it

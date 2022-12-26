@@ -125,18 +125,22 @@ module CaxlsxBuilder
 
       footer = sheet.footers.map.with_index do |cell, index|
         if cell.respond_to?(:call)
-          cell.call(sheet.cells(index))
+          call_footer_proc(cell, sheet.cells(index))
         else
           cell
         end
-      rescue StandardError => e
-        return nil if @options[:rescue_errors]
-
-        raise e
       end
 
       # Last row is the footer with the footer style applied
       worksheet.add_row(footer, style: @styles[:footer])
+    end
+
+    def call_footer_proc(cell, cells)
+      cell.call(cells)
+    rescue StandardError => e
+      return nil if @options[:rescue_errors]
+
+      raise e
     end
 
     # @return [Hash] The options to apply to a cell

@@ -34,6 +34,8 @@ module CaxlsxBuilder
 
     def add_footer_row: (Sheet sheet, Axlsx::Worksheet worksheet) -> void
 
+    def call_footer_proc: (Sheet::footer_proc cell, Array[Sheet::cell_value]? cells) -> Sheet::cell_value?
+
     def cell_options: (style: String? | Symbol?, type: Cell::type_value?) -> { style: Integer, type: Cell::type_value }
 
     def cast_to_hash: (Array[{ style: Integer, type: Cell::type_value }] | { style: Array[Integer], types: Array[Cell::type_value] }) -> { style: Array[Integer], types: Array[Cell::type_value] }

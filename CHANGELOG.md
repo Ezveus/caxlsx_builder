@@ -1,3 +1,7 @@
+## [1.1.1] - 2022-12-26
+
+- Fix 'rescue_errors' option
+
 ## [1.1.0] - 2022-12-26
 
 - Allow to rescue errors when calling procs to generate cell, style, type or footer
